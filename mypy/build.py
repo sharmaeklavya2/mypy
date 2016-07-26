@@ -66,10 +66,16 @@ class BuildResult:
 
 
 class BuildSource:
+    script_id = 0
+
     def __init__(self, path: Optional[str], module: Optional[str],
             text: Optional[str]) -> None:
         self.path = path
-        self.module = module or '__main__'
+        if module is None:
+            self.module = '__main_{}__'.format(BuildSource.script_id)
+            BuildSource.script_id += 1
+        else:
+            self.module = module
         self.text = text
 
     @property

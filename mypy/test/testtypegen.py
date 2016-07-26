@@ -69,7 +69,7 @@ class TypeExportSuite(Suite):
                               key=lambda n: (n.line, short_type(n),
                                              str(n) + str(map[n]))):
                 ts = str(map[key]).replace('*', '')  # Remove erased tags
-                ts = ts.replace('__main__.', '')
+                ts = re.sub(r'^__main_\d+__\.', '', ts)
                 a.append('{}({}) : {}'.format(short_type(key), key.line, ts))
         except CompileError as e:
             a = e.messages
